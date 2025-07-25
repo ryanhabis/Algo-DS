@@ -18,3 +18,6 @@ list.printList(); // Output: 10 20 30
 ```
 
 See [`Main.java`](./Main.java) for a runnable example.
+
+For more info 
+[geeksforgeeks link](https://www.geeksforgeeks.org/dsa/singly-linked-list-tutorial/)

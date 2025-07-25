@@ -18,3 +18,5 @@ list.printList(); // Output: 10 20 30
 ```
 
 See [`Main.java`](./Main.java) for
+
+For more info [text](https://www.geeksforgeeks.org/dsa/doubly-linked-list/)
