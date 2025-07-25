@@ -1,7 +1,7 @@
 package data_structures.arrays.DynamicArrays;
 
 /**
- * A dynamic array implementation with automatic resizing
+ * A dynamic array implementation with automatic resizing.
  * 
  * Features:
  * - Generic type support
@@ -10,16 +10,19 @@ package data_structures.arrays.DynamicArrays;
  * - Full exception handling
  */
 public class DynamicArray<T> {
+    // Initial capacity of the array
     private static final int INITIAL_CAPACITY = 10;
+    // Factor by which the array grows
     private static final double GROWTH_FACTOR = 1.5;
+    // Threshold to shrink the array
     private static final double SHRINK_THRESHOLD = 0.25;
     
-    private T[] array;
-    private int size;
-    private int capacity;
+    private T[] array;    // Internal array to store elements
+    private int size;     // Number of elements in the array
+    private int capacity; // Current capacity of the array
 
     /**
-     * Constructs an empty dynamic array with default capacity
+     * Constructs an empty dynamic array with default capacity.
      * Time Complexity: O(1)
      */
     @SuppressWarnings("unchecked")
@@ -30,7 +33,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Constructs an empty dynamic array with specified capacity
+     * Constructs an empty dynamic array with specified capacity.
      * Time Complexity: O(1)
      * 
      * @param initialCapacity the initial capacity of the array
@@ -47,7 +50,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Returns the number of elements in the array
+     * Returns the number of elements in the array.
      * Time Complexity: O(1)
      */
     public int size() {
@@ -55,7 +58,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Returns the current capacity of the array
+     * Returns the current capacity of the array.
      * Time Complexity: O(1)
      */
     public int capacity() {
@@ -63,7 +66,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Checks if the array is empty
+     * Checks if the array is empty.
      * Time Complexity: O(1)
      */
     public boolean isEmpty() {
@@ -71,7 +74,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Returns the element at the specified index
+     * Returns the element at the specified index.
      * Time Complexity: O(1)
      * 
      * @throws IndexOutOfBoundsException if index is out of bounds
@@ -82,7 +85,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Sets the element at the specified index
+     * Sets the element at the specified index.
      * Time Complexity: O(1)
      * 
      * @throws IndexOutOfBoundsException if index is out of bounds
@@ -93,7 +96,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Appends the element to the end of the array
+     * Appends the element to the end of the array.
      * Amortized Time Complexity: O(1)
      */
     public void add(T element) {
@@ -103,7 +106,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Inserts the element at the specified index
+     * Inserts the element at the specified index.
      * Time Complexity: O(n)
      * 
      * @throws IndexOutOfBoundsException if index is out of bounds
@@ -115,7 +118,7 @@ public class DynamicArray<T> {
         
         ensureCapacity();
         
-        // Shift elements to the right
+        // Shift elements to the right to make space
         for (int i = size; i > index; i--) {
             array[i] = array[i - 1];
         }
@@ -125,7 +128,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Removes the element at the specified index
+     * Removes the element at the specified index.
      * Time Complexity: O(n)
      * 
      * @throws IndexOutOfBoundsException if index is out of bounds
@@ -135,7 +138,7 @@ public class DynamicArray<T> {
         
         T removed = array[index];
         
-        // Shift elements to the left
+        // Shift elements to the left to fill the gap
         for (int i = index; i < size - 1; i++) {
             array[i] = array[i + 1];
         }
@@ -148,13 +151,14 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Removes the first occurrence of the specified element
+     * Removes the first occurrence of the specified element.
      * Time Complexity: O(n)
      * 
      * @return true if element was found and removed, false otherwise
      */
     public boolean remove(T element) {
         for (int i = 0; i < size; i++) {
+            // Handles null and non-null elements
             if (array[i] == element || 
                (array[i] != null && array[i].equals(element))) {
                 remove(i);
@@ -165,7 +169,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Returns the index of the first occurrence of the element
+     * Returns the index of the first occurrence of the element.
      * Time Complexity: O(n)
      */
     public int indexOf(T element) {
@@ -179,7 +183,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Checks if the array contains the specified element
+     * Checks if the array contains the specified element.
      * Time Complexity: O(n)
      */
     public boolean contains(T element) {
@@ -187,7 +191,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Removes all elements from the array
+     * Removes all elements from the array and resets capacity.
      * Time Complexity: O(n)
      */
     @SuppressWarnings("unchecked")
@@ -202,7 +206,7 @@ public class DynamicArray<T> {
     }
 
     /**
-     * Returns a string representation of the array
+     * Returns a string representation of the array.
      * Time Complexity: O(n)
      */
     @Override
@@ -219,24 +223,38 @@ public class DynamicArray<T> {
 
     // ================ PRIVATE HELPER METHODS ================ //
     
+    /**
+     * Checks if the index is within bounds for access/update.
+     * Throws IndexOutOfBoundsException if invalid.
+     */
     private void checkBounds(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
     }
 
+    /**
+     * Ensures there is enough capacity to add a new element.
+     * Resizes the array if needed.
+     */
     private void ensureCapacity() {
         if (size == capacity) {
             resize((int) (capacity * GROWTH_FACTOR) + 1);
         }
     }
 
+    /**
+     * Shrinks the array if usage drops below the threshold.
+     */
     private void considerShrinking() {
         if (capacity > INITIAL_CAPACITY && size < capacity * SHRINK_THRESHOLD) {
             resize(Math.max(INITIAL_CAPACITY, (int) (capacity / GROWTH_FACTOR)));
         }
     }
 
+    /**
+     * Resizes the internal array to the new capacity.
+     */
     @SuppressWarnings("unchecked")
     private void resize(int newCapacity) {
         T[] newArray = (T[]) new Object[newCapacity];
