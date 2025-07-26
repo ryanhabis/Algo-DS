@@ -1,4 +1,4 @@
-package data_structures.linked_lists.single_linked_list;
+package data_structures.linked_lists.Singly_Linked_List;
 
 /**
  * Demonstrates usage of the SingleLinkedList class.
