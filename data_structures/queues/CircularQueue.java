@@ -1,4 +1,4 @@
-package data_structures.queues.ArrayQueue.java;
+package data_structures.queues;
 
 public class CircularQueue {
     
